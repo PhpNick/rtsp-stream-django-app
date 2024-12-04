@@ -1,0 +1,21 @@
+{% extends '../base.html' %}
+
+{% block title %}Просмотр камер по RTSP ссылкам{% endblock %}
+
+{% block content %}
+
+<h2>Просмотр камер по RTSP ссылкам</h2>
+<a href="{% url 'stream' %}">К списку ссылок</a> | <a href="{% url 'link_create' %}">Добавить ссылку</a>
+<ul>
+    {% for link in links %}
+        <li>
+            {{ link.name }} - {{ link.url }}
+            <a href="{% url 'link_update' link.pk %}">Редактировать</a>
+            <a href="{% url 'link_delete' link.pk %}">Удалить</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+

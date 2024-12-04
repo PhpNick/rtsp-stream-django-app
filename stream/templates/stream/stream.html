@@ -1,0 +1,29 @@
+{% extends '../base.html' %}
+
+{% block title %}Просмотр камеры{% endblock %}
+
+{% block content %}
+
+<h2>Просмотр камеры по ссылке</h2>
+
+<script>
+    function checkStream() {
+        fetch("{% url 'check_stream' %}?url={{ hls_url }}")
+            .then(response => response.json())
+            .then(data => {
+                if (data.stream_ready) {
+                    document.getElementById('stream-link').innerHTML = `<a href="{% url 'stream_page' %}?url={{ hls_url }}">Просмотр</a>`;
+                    clearInterval(interval);
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+    }
+
+    const interval = setInterval(checkStream, 5000);
+</script>
+
+<div id="stream-link">Подождите, подготовка стрима для просмотра...</div>
+
+{% endblock %}
+
+

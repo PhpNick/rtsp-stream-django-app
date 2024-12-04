@@ -1,0 +1,28 @@
+<style>
+	.video-js {
+	  width: 900px;
+	  height: auto;
+	}	
+</style>
+
+<link href="https://vjs.zencdn.net/7.21.0/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/7.21.0/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<video id="video" class="video-js vjs-default-skin" controls autoplay width="640" height="360"></video>
+
+<script>
+    const video = document.getElementById('video');
+    const hlsUrl = "{{ hls_url }}";
+
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = hlsUrl;
+    } else if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(hlsUrl);
+        hls.attachMedia(video);
+    } else {
+        alert("Браузер не поддерживает HLS.");
+    }
+</script>
+
